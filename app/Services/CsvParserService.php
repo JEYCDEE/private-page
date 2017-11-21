@@ -39,14 +39,17 @@ implements MyParserInterface
             $dataArr = explode("\n", rtrim($file));
 
             foreach ($dataArr as $row => $data) {
+
                 $data = rtrim($data, ',');
 
                 foreach (explode(',', $data) as $key => $val) {
-                    if ($row === 0)
-                        $prettyArr[$row][$key] = $val;
-                    else
-                        $prettyArr[$row][$prettyArr[0][$key]] = $val;
+
+                    $row === 0
+                        ? $prettyArr[$row][$key] = $val
+                        : $prettyArr[$row][$prettyArr[0][$key]] = $val;
+
                 }
+
             }
 
             return $prettyArr;
@@ -74,10 +77,12 @@ implements MyParserInterface
         $csvString = '';
 
         foreach ($prettyArr as $row => $data) {
+
             $dataArr[$row] = implode(',', $data);
 
             if ($row == count($prettyArr) - 1)
                 $csvString = implode("\n", $dataArr);
+
         }
 
         try {
