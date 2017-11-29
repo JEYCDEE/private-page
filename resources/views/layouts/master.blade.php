@@ -29,29 +29,47 @@
         <nav>
             <ul>
                 <a
+                 class="with-effect page-switcher"
+                 id="navbar-login-button"
+                 onclick="DOM_MODS.openLoginBox(this)"
+                 {{ $isRoot ? 'hidden' : ''}}>
+                    <i class='material-icons'>account_box</i>
+                    <li>Login</li>
+                </a>
+
+                <a
+                 class="with-effect page-switcher"
+                 id="navbar-logout-button"
+                 onclick="LOGOUT()"
+                 {{ !$isRoot ? 'hidden' : '' }}>
+                    <i class='material-icons'>exit_to_app</i>
+                    <li>Logout</li>
+                </a>
+
+                <a
                  href="home"
-                 class='with-effect page-switcher active'>
+                 class="with-effect page-switcher active">
                     <i class='material-icons'>rss_feed</i>
                     <li>News</li>
                 </a>
 
                 <a
                  onclick="LOAD_PAGE(this, 'photos')"
-                 class='with-effect page-switcher'>
+                 class="with-effect page-switcher">
                     <i class='material-icons'>photo_camera</i>
                     <li>Photos</li>
                 </a>
 
                 <a
                  onclick="LOAD_PAGE(this, 'videos')"
-                 class='with-effect page-switcher'>
+                 class="with-effect page-switcher">
                     <i class='material-icons'>videocam</i>
                     <li>Videos</li>
                 </a>
 
                 <a
                  onclick="LOAD_PAGE(this, 'contacts')"
-                 class='with-effect page-switcher'>
+                 class="with-effect page-switcher">
                     <i class='material-icons'>contacts</i>
                     <li>Contacts</li>
                 </a>
@@ -119,6 +137,10 @@
              class="data-modal">
             </div>
         </div>
+
+        @if ($isRoot)
+            @includeIf('parts.control-panel')
+        @endif
 
     </body>
 

@@ -6,7 +6,6 @@ use App\Services\NewsPosts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
-
 class HomeController extends Controller
 {
     /**
@@ -18,7 +17,6 @@ class HomeController extends Controller
      * @var NewsPosts
      */
     private $newsPosts;
-
 
     /**
      * HomeController constructor.
@@ -45,6 +43,7 @@ class HomeController extends Controller
     	return view('pages.home', [
 
     	    'newsPosts' => $this->newsPosts->getAll(),
+            'isRoot'    => $this->redis::get('isRoot'),
 
         ]);
 
@@ -71,6 +70,26 @@ class HomeController extends Controller
             'link' => $link,
 
         ]);
+
+    }
+
+
+    /**
+     * This is simple login form box.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function partLoginBox()
+    {
+
+        return view('parts.login-box', []);
+
+    }
+
+    public function partControlPanel()
+    {
+
+        return view('parts.control-panel', []);
 
     }
 }

@@ -13,6 +13,11 @@
 
 Route::get('/{name}', 'HomeController@index')->where('name', 'home|index|');
 Route::get('/getPartMediaNavbar', 'HomeController@partMediaNavbar');
+Route::get('/getPartLoginBox', 'HomeController@partLoginBox');
+Route::get('/getPartControlPanel', 'HomeController@partControlPanel');
+
+Route::get('/loginAction', 'LoginController@loginAction');
+Route::get('/logoutAction', 'LoginController@logoutAction');
 
 Route::resource('/pages/photos', 'PhotosController');
 Route::resource('/pages/videos', 'VideosController');

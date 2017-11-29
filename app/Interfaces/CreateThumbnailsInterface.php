@@ -13,6 +13,6 @@ interface CreateThumbnailsInterface
      *
      * @return bool
      */
-    public static function make(string $path, string $saveTo);
+    public static function make(string $path, string $saveTo): bool;
 
 }

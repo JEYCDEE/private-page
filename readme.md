@@ -44,5 +44,7 @@ commands:
 
 **Changes log:**
 -
-- **Alpha.**
-  - Uploaded, released.
+- **Alpha 1**
+  - 1.0 Uploaded, released.
+  - 1.1 Added login for root user to manipulate data like adding, deleting,
+  editing new photos, videos, contacts, etc.

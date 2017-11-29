@@ -44,6 +44,7 @@ implements GetMediaInterface
      * Set the media type before continue any actions with this method.
      *
      * @param string $type
+     *
      * @return void
      */
     public function setMediaType(string $type)
@@ -58,10 +59,11 @@ implements GetMediaInterface
     /**
      * Get one media by selected id.
      *
-     * @param  string $id : file name
+     * @param string $id : file name
+     *
      * @return array
      */
-    public function getOne(string $id)
+    public function getOne(string $id) : array
     {
 
         return [0 => "Here you go, one file"];
@@ -75,7 +77,7 @@ implements GetMediaInterface
      *
      * @return array
      */
-    public function getAll()
+    public function getAll() : array
     {
 
         try {

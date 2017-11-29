@@ -6,7 +6,7 @@ use App\Interfaces\MyParserInterface;
 use App\Interfaces\MyResponsableInterface;
 use Illuminate\Contracts\Support\Responsable;
 
-use FileParserService;
+use App\Services\FileParserService;
 
 class ContactsIndexResponse
 implements Responsable, MyResponsableInterface

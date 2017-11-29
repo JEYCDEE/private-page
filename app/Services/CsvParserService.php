@@ -30,7 +30,7 @@ implements MyParserInterface
      *
      * @return array
      */
-    public function parseFromFile(string $file)
+    public function parseFromFile(string $file): array
     {
 
         try {
@@ -70,7 +70,7 @@ implements MyParserInterface
      *
      * @return string
      */
-    public function parseIntoFile(array $prettyArr, bool $store = false)
+    public function parseIntoFile(array $prettyArr, bool $store = false): string
     {
 
         $dataArr = [];

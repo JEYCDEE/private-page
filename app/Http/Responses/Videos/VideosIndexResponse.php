@@ -5,9 +5,8 @@ namespace App\Http\Responses\Videos;
 use App\Interfaces\MyResponsableInterface;
 use Illuminate\Contracts\Support\Responsable;
 
-use Storage;
-use FileGathererService;
-use MyHelperService;
+use App\Services\FileGathererService;
+use App\Services\MyHelperService;
 
 class VideosIndexResponse
 implements Responsable, MyResponsableInterface

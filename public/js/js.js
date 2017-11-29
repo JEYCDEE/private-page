@@ -27,7 +27,7 @@ const DOM_FIXES = class DOM_FIXES
      * according to grid number, we calculate width for each child.
      *
      * @param  String mediaContainer : parent dom element with all children inside
-     * @return void
+     * @return {Void}
      */
     static buildMediaGrid(mediaContainer, grid)
     {
@@ -71,7 +71,7 @@ const DOM_MODS = class DOM_MODS
      *
      * @param  {HTMLElement} elem media element
      *
-     * @return void
+     * @return {Void}
      */
     static showMediaMeta(elem)
     {
@@ -80,9 +80,9 @@ const DOM_MODS = class DOM_MODS
     /**
      * Hide file metadata.
      *
-     * @param  {HTMLElement} elem media element
+     * @param {HTMLElement} elem media element
      *
-     * @return void
+     * @return {Void}
      */
     static hideMediaMeta(elem)
     {
@@ -93,9 +93,9 @@ const DOM_MODS = class DOM_MODS
      * 'elem' attribute 'url'.
      *
      * @param {HTMLElement} elem       media element
-     * @param {integer}     animSpeed  media appearance animation speed
+     * @param {Integer}     animSpeed  media appearance animation speed
      *
-     * @return void
+     * @return {Void}
      */
     static showFullMedia(elem, animSpeed)
     {
@@ -117,6 +117,8 @@ const DOM_MODS = class DOM_MODS
             DOM_MODS.addMediaNavbar(videoHtml, animSpeed);
         }
 
+        return;
+
     }
 
     /**
@@ -125,9 +127,9 @@ const DOM_MODS = class DOM_MODS
      *
      * @param {HTMLElement} mediaHtml   image html element
      * @param {HTMLElement} navbarHtml  navigaion bar html element
-     * @param {integer}     animSpeed   navigaion bar appearance animation speed
+     * @param {Integer}     animSpeed   navigaion bar appearance animation speed
      *
-     * @return void
+     * @return {Void}
      */
     static addMediaNavbar(mediaHtml, animSpeed)
     {
@@ -162,9 +164,9 @@ const DOM_MODS = class DOM_MODS
      * correct width and height for both landscape and portrait media.
      *
      * @param {HTMLElement} mediaHtml  image html element
-     * @param {integer}     animSpeed  media appearance animation speed
+     * @param {Integer}     animSpeed  media appearance animation speed
      *
-     * @return void
+     * @return {Void}
      */
     static setMediaSize(mediaHtml, animSpeed)
     {
@@ -196,6 +198,8 @@ const DOM_MODS = class DOM_MODS
 
         });
 
+        return;
+
     }
 
     /**
@@ -203,12 +207,14 @@ const DOM_MODS = class DOM_MODS
      *
      * @param  {HTMLElement} elem media element
      *
-     * @return void
+     * @return {Void}
      */
     static setCurrentMedia(elem)
     {
 
         DOM_MODS.currentMedia = $(elem).closest('li').index();
+
+        return;
 
     }
 
@@ -227,11 +233,11 @@ const DOM_MODS = class DOM_MODS
     /**
      * Open modal window and paste given data inside it.
      *
-     * @param {integer}     level      could be 1,2,3 - depends on modal number
+     * @param {Integer}     level      could be 1,2,3 - depends on modal number
      * @param {HTMLElement} data       dom element / object
-     * @param {integer}     animSpeed  animation speed, optional
+     * @param {Integer}     animSpeed  animation speed, optional
      *
-     * @return void
+     * @return {Void}
      */
     static openModalWindow(level, data, animSpeed)
     {
@@ -246,15 +252,17 @@ const DOM_MODS = class DOM_MODS
 
         DOM_MODS.startListenToMediaKeys(level);
 
+        return;
+
     }
 
     /**
      * Close modal window and clean up it's data.
      *
-     * @param {integer} level      could be 1,2,3 - depends on modal window number
-     * @param {integer} animSpeed  animation speed, optional
+     * @param {Integer} level      could be 1,2,3 - depends on modal window number
+     * @param {Integer} animSpeed  animation speed, optional
      *
-     * @return void
+     * @return {Void}
      */
     static closeModalWindow(level, animSpeed)
     {
@@ -272,14 +280,16 @@ const DOM_MODS = class DOM_MODS
 
         DOM_MODS.stopListenToMediaKeys();
 
+        return;
+
     }
 
     /**
      * Add listener for media keys (previous, next, etc).
      *
-     * @param {integer} level could be 1,2,3 - depends on modal window number
+     * @param {Integer} level could be 1,2,3 - depends on modal window number
      *
-     * @return void
+     * @return {Void}
      */
     static startListenToMediaKeys(level)
     {
@@ -303,15 +313,17 @@ const DOM_MODS = class DOM_MODS
 
         });
 
+        return;
+
     }
 
     /**
      * Close current modal window and open a new one with next media. Cycle from
      * the beginning if the end is reached and go forward.
      *
-     * @param {integer} level could be 1,2,3 - depends on modal window number
+     * @param {Integer} level could be 1,2,3 - depends on modal window number
      *
-     * @return void
+     * @return {Void}
      */
     static nextMedia(level)
     {
@@ -339,9 +351,9 @@ const DOM_MODS = class DOM_MODS
      * Close current modal window and open a new one with previous media. Open
      * the first one from the end, if negative value and go backwards.
      *
-     * @param {integer} level could be 1,2,3 - depends on modal window number
+     * @param {Integer} level could be 1,2,3 - depends on modal window number
      *
-     * @return void
+     * @return {Void}
      */
     static previousMedia(level)
     {
@@ -354,6 +366,8 @@ const DOM_MODS = class DOM_MODS
         DOM_MODS.setCurrentMedia(previousElem);
         DOM_MODS.openModalWindow(level, previousData);
 
+        return;
+
     }
 
     /**
@@ -364,6 +378,8 @@ const DOM_MODS = class DOM_MODS
 
         $(document).unbind('keydown');
 
+        return;
+
     }
 
     /**
@@ -371,7 +387,7 @@ const DOM_MODS = class DOM_MODS
      *
      * @constructor
      *
-     * @return void
+     * @return {Void}
      */
     static turnOnMediaPagination()
     {
@@ -393,7 +409,7 @@ const DOM_MODS = class DOM_MODS
             var documentHeight = $(document).height();
             var currentScroll  = $this.scrollTop() + WIN_HEIGHT;
 
-            if (currentScroll >= documentHeight - 100) {
+            if (currentScroll >= documentHeight - 200) {
 
                 APP.find('.media li').slice(PAGIN_STEP, paginationNext).each(function(index, li) {
 
@@ -409,30 +425,338 @@ const DOM_MODS = class DOM_MODS
 
         });
 
+        return;
+
     }
 
     /**
      * Get currently loaded through ajax page name.
      *
-     * @returns {string}
+     * @return {String}
      */
     static getCurrentPage()
     {
 
         return APP.attr('page');
 
+        return;
+
     }
 
     /**
      * Set new page name.
      *
-     * @param {string} name
-     * @return void
+     * @param {String} name
+     * @return {Void}
      */
     static setCurrentPage(name)
     {
 
         APP.attr('page', name);
+
+        return;
+
+    }
+
+    /**
+     * Open login modal box, load login form box and paste it inside the modal
+     * window. Add submit and cancel button listeners to react on this actions.
+     *
+     * @param  {HTMLElement} elem : navbar button, that user clicked itself
+     *
+     * @return {Void}
+     */
+    static openLoginBox(elem)
+    {
+
+        var elem       = $(elem);
+        var modalLevel = 1;
+        var customUrl  = '/getPartLoginBox';
+
+        CUSTOM_AJAX(function(result) {
+
+            if (result.completed && result.success) {
+
+                DOM_MODS.openModalWindow(modalLevel, result.data, ANIM_MEDIUM);
+
+                /* Add submit button listener */
+                $('#login-box_submit').unbind('click').on('click', function () {
+
+                    var loginBox = $(this).closest('#login-box');
+                    var login = loginBox.find('input#login-box_login').val();
+                    var password = loginBox.find('input#login-box_password').val();
+
+                    LOGIN(login, password);
+
+                });
+
+                /* Add cancel button listener */
+                $('#login-box_cancel').unbind('click').on('click', function () {
+
+                    DOM_MODS.closeModalWindow(modalLevel, ANIM_MEDIUM);
+
+                });
+            } else {
+                console.log(result.message);
+            }
+
+        }, customUrl, 'GET', {}, 'html', false);
+
+        return;
+
+    }
+
+    /**
+     * Switch between login and logout navbar buttons with icons and text.
+     *
+     * @return {Void}
+     */
+    static switchLoginLogoutButtons()
+    {
+
+        var loginButton  = $('#navbar-login-button');
+        var logoutButton = $('#navbar-logout-button');
+
+        if (loginButton.prop('hidden') === true) {
+            loginButton.prop('hidden', false);
+            logoutButton.prop('hidden', true);
+        } else {
+            loginButton.prop('hidden', true);
+            logoutButton.prop('hidden', false);
+        }
+
+    }
+
+    /**
+     * Show admin control panel with additional controls, if root user
+     * successfully loggs in.
+     *
+     * @return {Void}
+     */
+    static showAdminControlPanel()
+    {
+
+        var customUrl = '/getPartControlPanel';
+
+        CUSTOM_AJAX(function(result) {
+
+            $('body').prepend(result.data);
+
+        }, customUrl, 'GET', {}, 'html', false);
+
+    }
+
+    /**
+     * Hide admin control panel when root user loggs out.
+     *
+     * @return {Void}
+     */
+    static hideAdminControlPanel()
+    {
+
+        $('#control-panel').remove();
+
+    }
+
+}
+
+/**
+ * Here we store all content manipulation methods like adding new element,
+ * modifing existing one or deleting it. All methods are common for each media
+ * type and accept parameters to define which type is going to be manipulated.
+ * The type we usualy take from 'div#app page='  attribute. If it's empty, then
+ * we are dealing with home / main / news page.
+ */
+const CONTENT_MANAGER = class CONTENT_MOD
+{
+
+    /**
+     * Define what type of page currently loaded. We take the 'pagep' value from
+     * 'div#app' element.
+     *
+     * @return {String}
+     */
+    static definePageType()
+    {
+
+        return $('#app').attr('page') == '' ? 'news' : $('#app').attr('page');
+
+    }
+
+    /**
+     ***************************************************************************
+     * ADD METHODS *************************************************************
+     ***************************************************************************
+     * Here we define the type of the page and call specific method to ADD new
+     * content.
+     *
+     * @return {Void}
+     */
+    static add()
+    {
+
+        var type   = this.definePageType();
+        var method = 'add' + type.charAt(0).toUpperCase() + type.slice(1);
+
+        this[method]();
+
+    }
+
+    /**
+     * Add new posts to news / main / home page.
+     */
+    static addNews()
+    {
+
+        alert('Adding new posts!');
+
+    }
+
+    /**
+     * Add new photos to photos page.
+     */
+    static addPhotos()
+    {
+
+        alert('Adding new photos!');
+
+    }
+
+    /**
+     *  Add new videos to videos page.
+     */
+    static addVideos()
+    {
+
+        alert('Adding new videos!');
+
+    }
+
+    /**
+     * Add new contacts to contacts page.
+     */
+    static addContacts()
+    {
+
+        alert('Adding new contacts!');
+
+    }
+
+    /**
+     ***************************************************************************
+     * DELETE METHODS **********************************************************
+     ***************************************************************************
+     * Here we define the type of the page and call specific method to DELETE
+     * already existing content.
+     *
+     * @return {Void}
+     */
+    static delete()
+    {
+
+        var type   = this.definePageType();
+        var method = 'delete' + type.charAt(0).toUpperCase() + type.slice(1);
+
+        this[method]();
+
+    }
+
+    /**
+     * Delete existing posts from news / main / home page.
+     */
+    static deleteNews()
+    {
+
+        alert('Deleting existing posts!');
+
+    }
+
+    /**
+     * Delete existing photos from photos page.
+     */
+    static deletePhotos()
+    {
+
+        alert('Deleting existing photos!');
+
+    }
+
+    /**
+     *  Delete existing videos from videos page.
+     */
+    static deleteVideos()
+    {
+
+        alert('Deleting existing videos!');
+
+    }
+
+    /**
+     * Delete existing contacts from contacts page.
+     */
+    static deleteContacts()
+    {
+
+        alert('Deleting existing contacts!');
+
+    }
+
+    /**
+     ***************************************************************************
+     * EDIT METHODS ************************************************************
+     ***************************************************************************
+     * Here we define the type of the page and call specific method to EDIT
+     * existing content.
+     *
+     * @return {Void}
+     */
+    static edit()
+    {
+
+        var type   = this.definePageType();
+        var method = 'edit' + type.charAt(0).toUpperCase() + type.slice(1);
+
+        this[method]();
+
+    }
+
+    /**
+     * Edit existing posts from news / main / home page.
+     */
+    static editNews()
+    {
+
+        alert('Editing existing posts!');
+
+    }
+
+    /**
+     * Edit existing photos from photos page.
+     */
+    static editPhotos()
+    {
+
+        alert('Editing existing photos!');
+
+    }
+
+    /**
+     *  Edit existing videos from videos page.
+     */
+    static editVideos()
+    {
+
+        alert('Editing existing videos!');
+
+    }
+
+    /**
+     * Edit existing contacts from contacts page.
+     */
+    static editContacts()
+    {
+
+        alert('Editing existing contacts!');
 
     }
 
@@ -442,10 +766,10 @@ const DOM_MODS = class DOM_MODS
  * Standard jQuery .ajax function a bit refactored for current project.
  *
  * @param {action}  action    run this method after ajax finished
- * @param {string}  customUrl name of the page to load
- * @param {string}  method    default is 'POST', but feel free to change it
+ * @param {String}  customUrl name of the page to load
+ * @param {String}  method    default is 'POST', but feel free to change it
  * @param {Object}  data      data you would like to send to controller
- * @param {string}  type      default is 'json', but feel free to change it
+ * @param {String}  type      default is 'json', but feel free to change it
  * @param {Boolean} async     default is 'true', but feel free to change it
  *
  * @return {Object}
@@ -504,7 +828,7 @@ const CUSTOM_AJAX = function(action, customUrl, method, data, type, async)
  * Load selected page into main application block instead of already loaded one.
  *
  * @param  {HTMLElement} elem anchor button
- * @param  {string}      name name of the page, that is going to be loaded
+ * @param  {String}      name name of the page, that is going to be loaded
  *
  * @return {Void}
  */
@@ -551,5 +875,68 @@ const LOAD_PAGE = function(elem, name)
         }, customUrl, 'GET', {}, 'html', false);
 
     }
+
+}
+
+/**
+ * Login root user so he can take control over the whole web app. If success
+ * change navbar icon and text to logout.
+ *
+ * @param  String         login
+ * @param  String         password
+ *
+ * @return {Void}
+ */
+const LOGIN = function(login, password)
+{
+
+    var customUrl  = '/loginAction';
+    var data       = {
+        login    : login,
+        password : password
+    }
+
+    CUSTOM_AJAX(function(result) {
+
+        if (result.completed && result.success && result.data === true) {
+            /* Close modal, we don't need it anymore. */
+            DOM_MODS.closeModalWindow(1, ANIM_MEDIUM);
+
+            /* Switch between login and logout buttons. */
+            DOM_MODS.switchLoginLogoutButtons();
+
+            /* Show control panel */
+            DOM_MODS.showAdminControlPanel();
+        } else {
+            alert('Nice try, but no, you are not a root user');
+        }
+
+    }, customUrl, 'GET', data, 'json', false);
+
+}
+
+/**
+ * Due to we have only one user - root, we have to remove only him from redis.
+ *
+ * @return {Boolean}
+ */
+const LOGOUT = function()
+{
+
+    var customUrl = '/logoutAction';
+
+    CUSTOM_AJAX(function(result) {
+
+        /* Switch between login and logout buttons. */
+        if (result.completed && result.success && result.data === true) {
+
+            /* Switch between login and logout buttons. */
+            DOM_MODS.switchLoginLogoutButtons();
+
+            /* Show control panel */
+            DOM_MODS.hideAdminControlPanel();
+        }
+
+    }, customUrl, 'GET', {}, 'json', false);
 
 }

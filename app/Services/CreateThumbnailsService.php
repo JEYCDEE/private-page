@@ -45,7 +45,7 @@ implements CreateThumbnailsInterface
      * @param  string $saveTo : path where file(s) would be saved
      * @return bool
      */
-    public static function make(string $path, string $saveTo)
+    public static function make(string $path, string $saveTo): bool
     {
 
         self::defineSource($path);
