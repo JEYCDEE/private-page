@@ -17,9 +17,7 @@ interface LoginInterface
     public function loginAction(Request $request): bool;
 
     /**
-     * Logout root user from the system.
-     *
-     * @param string $userId : user identificator, could be anything
+     * Logout root user from the system by removing isRoot from Redis cache.
      *
      * @return boolean
      */

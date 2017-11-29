@@ -36,8 +36,6 @@ implements LoginInterface
     /**
      * Logout root user from the system.
      *
-     * @param string $userId : user identificator, could be anything
-     *
      * @return boolean
      */
     public function logoutAction(): bool
