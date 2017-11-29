@@ -1,8 +1,7 @@
 <div class="media photos">
 
     <ul class="photos-list">
-    @for ($i = 0; $i <= 100; $i++)
-        @foreach ($photos as $key => $photo)
+    @foreach ($photos as $key => $photo)
 
         <li hidden>
             <div
@@ -18,9 +17,7 @@
             </div>
         </li>
 
-        @endforeach
-    @endfor
-
+    @endforeach
     </ul>
 
 </div>

@@ -39,7 +39,7 @@ implements CreateThumbnailsInterface
     private static $thumbWidth = 400;
 
     /**
-     * Create thumbnails either for whle directory, or for single file.
+     * Create thumbnails either for whole directory, or for single file.
      *
      * @param  string $path : path to a file or folder
      * @param  string $saveTo : path where file(s) would be saved
