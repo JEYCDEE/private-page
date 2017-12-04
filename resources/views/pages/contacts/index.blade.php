@@ -2,10 +2,10 @@
 
     <thead>
         <tr>
-            <th class="with-effect with-shadow-2">First Name</th>
-            <th class="with-effect with-shadow-2">Last Name</th>
-            <th class="with-effect with-shadow-2">Email</th>
-            <th class="with-effect with-shadow-2">Phone</th>
+            <th class="with-effect with-shadow-2">@lang('common.firstName')</th>
+            <th class="with-effect with-shadow-2">@lang('common.lastName')</th>
+            <th class="with-effect with-shadow-2">@lang('common.email')</th>
+            <th class="with-effect with-shadow-2">@lang('common.phone')</th>
         </tr>
     </thead>
 

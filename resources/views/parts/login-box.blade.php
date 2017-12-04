@@ -4,7 +4,7 @@
      type="text"
      id="login-box_login"
      name="login-box_login"
-     placeholder="Who are you?"
+     placeholder="@lang('common.whoAreYou')?"
      class="with-shadow-2 with-effect"
     />
 
@@ -12,7 +12,7 @@
      type="password"
      id="login-box_password"
      name="login-box_password"
-     placeholder="Your passphrase"
+     placeholder="@lang('common.yourPassphrase')"
      class="with-shadow-2 with-effect"
     />
 
@@ -20,7 +20,7 @@
      type="submit"
      id="login-box_submit"
      name="login-box_submit"
-     value="Give it a try"
+     value="@lang('common.giveItATry')"
      class="float-left with-shadow-2 with-effect"
     />
 
@@ -28,7 +28,7 @@
      type="submit"
      id="login-box_cancel"
      name="login-box_cancel"
-     value="Cancel"
+     value="@lang('common.cancel')"
      class="float-right with-shadow-2 with-effect"
     />
 

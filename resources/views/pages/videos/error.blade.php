@@ -1,5 +1,5 @@
 <div class="errors">
-    <h1>Something went wrong. Please fix this.</h1>
+    <h1>@lang('common.errorSomethingWentWrong')</h1>
 
     @foreach ($errors as $counter => $error)
         <p>

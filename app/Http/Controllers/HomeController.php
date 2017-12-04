@@ -4,16 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Services\NewsPosts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
+
     /**
+     * List of defined language constants. This languages should exist in
+     * 'resources/lang' set.
+     *
+     * @var array
+     */
+    private $appLanguages = ['en', 'ru'];
+
+    /**
+     * Redis database itself.
+     *
      * @var Redis
      */
     private $redis;
 
     /**
+     * All news posts for home / index / news page
+     *
      * @var NewsPosts
      */
     private $newsPosts;
@@ -27,25 +44,67 @@ class HomeController extends Controller
     public function __construct(Redis $redis, NewsPosts $newsPosts)
     {
 
-        $this->redis     = $redis;
+        $this->setLanguage();
+
+        $this->redis = $redis;
         $this->newsPosts = $newsPosts;
 
     }
 
-	/**
-	 * This is home page, that welcomes you.
-	 *
+    /**
+     * This is home page, that welcomes you.
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-	 */
+     */
     public function index()
     {
 
-    	return view('pages.home', [
+        return view('pages.home', [
 
-    	    'newsPosts' => $this->newsPosts->getAll(),
-            'isRoot'    => $this->redis::get('isRoot'),
+            'newsPosts'  => $this->newsPosts->getAll(),
+            'isRoot'     => $this->redis::get('isRoot'),
 
         ]);
+
+    }
+
+    /**
+     * Switch web app language by setting new cookie.
+     *
+     * @param string $lang : language name to switch to
+     *
+     * @return \Illuminate\Support\Facades\Redirect.
+     */
+    public function switchLanguage(string $lang)
+    {
+
+        Cookie::queue(Cookie::forever('lang', $lang));
+
+        App::setLocale($lang);
+
+        return Redirect::to('/home');
+
+    }
+
+    /**
+     * Set current web application language, or return to default one.
+     *
+     * @return void
+     */
+    private function setLanguage()
+    {
+
+        $language = Cookie::get('lang', 'en');
+
+        if (!in_array($language, $this->appLanguages))
+            $language = Crypt::decrypt($language);
+
+        if (!in_array($language, $this->appLanguages))
+            $language = 'en';
+
+        App::setLocale($language);
+
+        return;
 
     }
 
@@ -55,7 +114,7 @@ class HomeController extends Controller
      *
      * @param Request $request
      *
-     * @var string $link : link for <a> elemnt for downlaoding picture
+     * @var string $link : link for <a> element for downloading picture
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      *
@@ -86,6 +145,11 @@ class HomeController extends Controller
 
     }
 
+    /**
+     * This is control panel for root user.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function partControlPanel()
     {
 

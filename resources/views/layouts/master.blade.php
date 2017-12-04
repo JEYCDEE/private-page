@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Our Media library</title>
+        <title>@lang('common.ourMediaLibrary')</title>
 
         {{-- Fonts --}}
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -28,13 +28,21 @@
 
         <nav>
             <ul>
+
+                <a
+                        href="/switchLanguage/{{ Cookie::get('lang') == 'en' ? 'ru' : 'en' }}"
+                        class="with-effect page-switcher">
+                    <i class='material-icons'>language</i>
+                    <li>{{ mb_strtoupper(Cookie::get('lang') == 'en' ? 'рус' : 'eng') }}</li>
+                </a>
+
                 <a
                  class="with-effect page-switcher"
                  id="navbar-login-button"
                  onclick="DOM_MODS.openLoginBox(this)"
                  {{ $isRoot ? 'hidden' : ''}}>
                     <i class='material-icons'>account_box</i>
-                    <li>Login</li>
+                    <li>@lang('common.login')</li>
                 </a>
 
                 <a
@@ -43,42 +51,42 @@
                  onclick="LOGOUT()"
                  {{ !$isRoot ? 'hidden' : '' }}>
                     <i class='material-icons'>exit_to_app</i>
-                    <li>Logout</li>
+                    <li>@lang('common.logout')</li>
                 </a>
 
                 <a
                  href="home"
                  class="with-effect page-switcher active">
                     <i class='material-icons'>rss_feed</i>
-                    <li>News</li>
+                    <li>@lang('common.news')</li>
                 </a>
 
                 <a
                  onclick="LOAD_PAGE(this, 'photos')"
                  class="with-effect page-switcher">
                     <i class='material-icons'>photo_camera</i>
-                    <li>Photos</li>
+                    <li>@lang('common.photos')</li>
                 </a>
 
                 <a
                  onclick="LOAD_PAGE(this, 'videos')"
                  class="with-effect page-switcher">
                     <i class='material-icons'>videocam</i>
-                    <li>Videos</li>
+                    <li>@lang('common.videos')</li>
                 </a>
 
                 <a
                  onclick="LOAD_PAGE(this, 'contacts')"
                  class="with-effect page-switcher">
                     <i class='material-icons'>contacts</i>
-                    <li>Contacts</li>
+                    <li>@lang('common.contacts')</li>
                 </a>
 
                 {{--<a
                  onclick="LOAD_PAGE(this, 'calendars')"
                  class='with-effect page-switcher'>
                     <i class='material-icons'>event</i>
-                    <li>Calendars</li>
+                    <li>@lang('common.calendars')</li>
                 </a>--}}
             </ul>
         </nav>

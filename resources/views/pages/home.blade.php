@@ -3,7 +3,7 @@
 @section('content')
     <div id="news">
 
-        <h1>Our news:</h1>
+        <h1>@lang('common.ourNews'):</h1>
 
         @foreach ($newsPosts as $date => $posts)
 

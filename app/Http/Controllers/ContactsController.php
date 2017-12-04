@@ -18,6 +18,7 @@ class ContactsController extends Controller
 
     public function __construct(FileParserService $fileParserS, CsvParserService $csvParserS)
     {
+
         $this->fileParserS = $fileParserS;
         $this->csvParserS = $csvParserS;
 
@@ -30,6 +31,7 @@ class ContactsController extends Controller
      */
     public function index()
     {
+
         return new ContactsIndexResponse($this->fileParserS, $this->csvParserS);
 
     }

@@ -48,3 +48,5 @@ commands:
   - 1.0 Uploaded, released.
   - 1.1 Added login for root user to manipulate data like adding, deleting,
   editing new photos, videos, contacts, etc.
+  - 1.2 Added multiple languages. Now you can switch between English and Russian
+  languages.
