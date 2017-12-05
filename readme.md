@@ -41,6 +41,9 @@ folder, that's why we should make aliases for our media files. Let's run this
 commands: 
   - Photos: '_php artisan symlinks:photos_'
   - Videos: '_php artisan symlinks:videos_'
+- To control web app you should be logged in. Default credentials are:
+  - Login: _root_
+  - Password: _root_
 
 **Changes log:**
 -
