@@ -216,11 +216,12 @@ input[type="submit"] {
     overflow-y: hidden;
     overflow-x: hidden;
     display: none;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.85);
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: 200;
 }
 
 /*.modal-window .data-modal {
@@ -291,6 +292,16 @@ input[type="submit"] {
     float: right;
 }
 
+.static-page-switcher {
+    background-color: rgb(50,100,150);
+    color: rgb(255,255,255);
+    padding-bottom: 14px;
+}
+.static-page-switcher:hover {
+    background-color: rgb(100,150,200);
+    color: rgb(255,255,255);
+}
+
 /******************************************************************************/
 /* ID's ONLY ******************************************************************/
 /******************************************************************************/
@@ -345,6 +356,7 @@ input[type="submit"] {
     text-align: center;
     background-color: rgba(100,150,200,0.95);
     color: rgb(255,255,255);
+    z-index: 100;
 }
 #control-panel > p {
     display: inline-block;

@@ -558,6 +558,32 @@ const DOM_MODS = class DOM_MODS
 
     }
 
+
+    /**
+     * Clean up the form fields when it's needed by iterating through all it's
+     * children.
+     *
+     * @param {String} formId  form identifier, etc <div id="login-box">...
+     */
+    static cleanForm(formId)
+    {
+
+        var formElement = $('#' + formId);
+
+        formElement.find('input, textarea').each(function(index, field) {
+
+            var submitButton = $(field).attr('type') === 'submit';
+
+            if (!submitButton) {
+
+                $(field).not("[type='submit']").val('');
+
+            }
+
+        });
+
+    }
+
 }
 
 /**
@@ -571,7 +597,7 @@ const CONTENT_MANAGER = class CONTENT_MOD
 {
 
     /**
-     * Define what type of page currently loaded. We take the 'pagep' value from
+     * Define what type of page currently loaded. We take the 'page' value from
      * 'div#app' element.
      *
      * @return {String}
@@ -880,10 +906,10 @@ const LOAD_PAGE = function(elem, name)
 
 /**
  * Login root user so he can take control over the whole web app. If success
- * change navbar icon and text to logout.
+ * clean up the form fields, change navbar icon and text to logout.
  *
- * @param  String         login
- * @param  String         password
+ * @param  {String}  login
+ * @param  {String}  password
  *
  * @return {Void}
  */
@@ -899,6 +925,9 @@ const LOGIN = function(login, password)
     CUSTOM_AJAX(function(result) {
 
         if (result.completed && result.success && result.data === true) {
+            /* Clean form fields from it's values */
+            DOM_MODS.cleanForm('login-box');
+
             /* Close modal, we don't need it anymore. */
             DOM_MODS.closeModalWindow(1, ANIM_MEDIUM);
 
@@ -908,7 +937,7 @@ const LOGIN = function(login, password)
             /* Show control panel */
             DOM_MODS.showAdminControlPanel();
         } else {
-            alert('Nice try, but no, you are not a root user');
+            alert('Nice try, but no, this is not a root user');
         }
 
     }, customUrl, 'GET', data, 'json', false);

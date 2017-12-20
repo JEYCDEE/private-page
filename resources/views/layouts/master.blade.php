@@ -30,14 +30,14 @@
             <ul>
 
                 <a
-                        href="/switchLanguage/{{ Cookie::get('lang') == 'en' ? 'ru' : 'en' }}"
-                        class="with-effect page-switcher">
+                 href="/switchLanguage/{{ Cookie::get('lang') == 'en' ? 'ru' : 'en' }}"
+                 class="with-effect page-switcher static-page-switcher">
                     <i class='material-icons'>language</i>
                     <li>{{ mb_strtoupper(Cookie::get('lang') == 'en' ? 'рус' : 'eng') }}</li>
                 </a>
 
                 <a
-                 class="with-effect page-switcher"
+                 class="with-effect page-switcher static-page-switcher"
                  id="navbar-login-button"
                  onclick="DOM_MODS.openLoginBox(this)"
                  {{ $isRoot ? 'hidden' : ''}}>
@@ -46,7 +46,7 @@
                 </a>
 
                 <a
-                 class="with-effect page-switcher"
+                 class="with-effect page-switcher static-page-switcher"
                  id="navbar-logout-button"
                  onclick="LOGOUT()"
                  {{ !$isRoot ? 'hidden' : '' }}>
