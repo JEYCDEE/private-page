@@ -36,9 +36,9 @@ it will be automatically unparsed by a program service.
 this commands:
   - Photos: '_php artisan thumbnails:photos_'
   - Videos: '_php artisan thumbnails:videos_'
-- When clicking on a photo or video thumbnail, we need to have them in our public
-folder, that's why we should make aliases for our media files. Let's run this
-commands: 
+- When clicking on a photo or video thumbnail, we need to have them in our
+public folder, that's why we should make aliases for our media files. Let's run
+this commands: 
   - Photos: '_php artisan symlinks:photos_'
   - Videos: '_php artisan symlinks:videos_'
 - To control web app you should be logged in. Default credentials are:
@@ -53,3 +53,6 @@ commands:
   editing new photos, videos, contacts, etc.
   - 1.2 Added multiple languages. Now you can switch between English and Russian
   languages.
+  - 1.3 Added functionality for adding new posts on the home screen. Also fixed
+  some bugs and annotations.
+  

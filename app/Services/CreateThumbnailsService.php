@@ -43,7 +43,8 @@ implements CreateThumbnailsInterface
      *
      * @param  string $path : path to a file or folder
      * @param  string $saveTo : path where file(s) would be saved
-     * @return bool
+     *
+     * @return boolean
      */
     public static function make(string $path, string $saveTo): bool
     {
@@ -80,6 +81,7 @@ implements CreateThumbnailsInterface
      *
      * @param  string $path : path to a file or folder
      * @param  string $saveTo : path where file(s) would be saved
+     *
      * @return void
      */
     private static function fromDirectory(string $path, string $saveTo)

@@ -1,5 +1,7 @@
 "use strict";
 
+var LANG; // Here we will save all language constants taken from backend
+
 const APP          = $('#app');
 const TOKEN        = $('body').attr('token');
 const PAGES_PREFIX = '/pages/';
@@ -17,6 +19,298 @@ const MEDIA_WIDTH  = IS_DESKTOP ? 960 : IS_TABLET ? 680 : IS_PHONE ? WIN_WIDTH -
 const MEDIA_HEIGHT = IS_DESKTOP || IS_TABLET ? WIN_HEIGHT - 100 : IS_PHONE ? WIN_HEIGHT - 100 : 0;
 
 /**
+ * Here we store all content manipulation methods like adding new element,
+ * modifying existing one or deleting it. All methods are common for each media
+ * type and accept parameters to define which type is going to be manipulated.
+ * The type we usually take from 'div#app page='  attribute. If it's empty, then
+ * we are dealing with home / main / news page.
+ */
+const CONTENT_MANAGER = class CONTENT_MANAGER
+{
+
+    /**
+     * Define what type of page currently loaded. We take the 'page' value from
+     * 'div#app' element.
+     *
+     * @return {String}
+     */
+    static definePageType()
+    {
+
+        return $('#app').attr('page') == '' ? 'news' : $('#app').attr('page');
+
+    }
+
+    /**
+     * Get part with HTML form and run callback function if success.
+     *
+     * @param {String}  customUrl   name of the route to get html form from
+     * @param {Integer} modalLevel  level of modal depth
+     * @param {action}  action      run this method after ajax finished
+     *
+     * @return {Void}
+     */
+    static getForm(customUrl, modalLevel, action)
+    {
+
+        var customUrl  = '/' + customUrl;
+        var method     = 'GET';
+        var type       = 'html';
+        var async      = false;
+        var data       = {_token : TOKEN};
+
+        CUSTOM_AJAX(function(result) {
+
+            if (result.success && result.completed) {
+
+                DOM_MODS.openModalWindow(modalLevel, result.data, ANIM_MEDIUM);
+
+                action();
+
+            } else {
+
+                console.log({'ERROR:getForm': result.message, 'customUrl': customUrl});
+
+            }
+
+        }, customUrl, method, data, type, async);
+
+        return;
+
+    }
+
+    /**
+     ***************************************************************************
+     * ADD METHODS *************************************************************
+     ***************************************************************************
+     * Here we define the type of the page and call specific method to ADD new
+     * content.
+     *
+     * @return {Void}
+     */
+    static add()
+    {
+
+        var type   = this.definePageType();
+        var method = 'add' + type.charAt(0).toUpperCase() + type.slice(1);
+
+        this[method]();
+
+    }
+
+    /**
+     * Add new contacts to contacts page.
+     */
+    static addContacts()
+    {
+
+        alert('Adding new contacts!');
+
+    }
+
+    /**
+     * Add new posts to news / main / home page.
+     */
+    static addNews()
+    {
+
+        var modalLevel = 1;
+        var route      = '/addNews';
+        var method     = 'POST';
+        var type       = 'json';
+        var async      = true;
+
+        this.getForm('getPartNewsPostForm', modalLevel, function() {
+
+            /* Add listener to submit button. */
+            $('#news-post-form_submit').unbind('click').on('click', function() {
+
+                var form      = $(this).closest('#news-post-form');
+                var error     = form.find('#news-post-form_error');
+                var input     = form.find('#news-post-form_description').val();
+                var validator = VALIDATE.textField(input);
+                var data      = {
+                    _token : TOKEN,
+                    data   : input,
+                }
+
+                if (validator.isValid) {
+
+                    CUSTOM_AJAX(function(result) {
+
+                        if (result.completed && result.success) {
+
+                            if (result.data.success)
+                                location.reload();
+
+                        } else {
+
+                            console.log({'ERROR:addNews': result.message, data});
+
+                        }
+
+                    }, route, method, data, type, async)
+
+                } else {
+
+                    $(error).empty().text(LANG[validator.message]);
+
+                }
+
+            });
+
+            /* Add listener to cancel button. */
+            $('#news-post-form_cancel').unbind('click').on('click', function() {
+
+                DOM_MODS.closeModalWindow(modalLevel, ANIM_MEDIUM);
+
+            });
+
+        });
+
+    }
+
+    /**
+     * Add new photos to photos page.
+     */
+    static addPhotos()
+    {
+
+        alert('Adding new photos!');
+
+    }
+
+    /**
+     *  Add new videos to videos page.
+     */
+    static addVideos()
+    {
+
+        alert('Adding new videos!');
+
+    }
+
+    /**
+     ***************************************************************************
+     * DELETE METHODS **********************************************************
+     ***************************************************************************
+     * Here we define the type of the page and call specific method to DELETE
+     * already existing content.
+     *
+     * @return {Void}
+     */
+    static delete()
+    {
+
+        var type   = this.definePageType();
+        var method = 'delete' + type.charAt(0).toUpperCase() + type.slice(1);
+
+        this[method]();
+
+    }
+
+    /**
+     * Delete existing contacts from contacts page.
+     */
+    static deleteContacts()
+    {
+
+        alert('Deleting existing contacts!');
+
+    }
+
+    /**
+     * Delete existing posts from news / main / home page.
+     */
+    static deleteNews()
+    {
+
+        alert('Deleting existing posts!');
+
+    }
+
+    /**
+     * Delete existing photos from photos page.
+     */
+    static deletePhotos()
+    {
+
+        alert('Deleting existing photos!');
+
+    }
+
+    /**
+     *  Delete existing videos from videos page.
+     */
+    static deleteVideos()
+    {
+
+        alert('Deleting existing videos!');
+
+    }
+
+    /**
+     ***************************************************************************
+     * EDIT METHODS ************************************************************
+     ***************************************************************************
+     * Here we define the type of the page and call specific method to EDIT
+     * existing content.
+     *
+     * @return {Void}
+     */
+    static edit()
+    {
+
+        var type   = this.definePageType();
+        var method = 'edit' + type.charAt(0).toUpperCase() + type.slice(1);
+
+        this[method]();
+
+    }
+
+    /**
+     * Edit existing contacts from contacts page.
+     */
+    static editContacts()
+    {
+
+        alert('Editing existing contacts!');
+
+    }
+
+    /**
+     * Edit existing posts from news / main / home page.
+     */
+    static editNews()
+    {
+
+        alert('Editing existing posts!');
+
+    }
+
+    /**
+     * Edit existing photos from photos page.
+     */
+    static editPhotos()
+    {
+
+        alert('Editing existing photos!');
+
+    }
+
+    /**
+     *  Edit existing videos from videos page.
+     */
+    static editVideos()
+    {
+
+        alert('Editing existing videos!');
+
+    }
+
+}
+
+/**
  * Here we store all useful trick and fixes to Dom Elements.
  */
 const DOM_FIXES = class DOM_FIXES
@@ -27,6 +321,7 @@ const DOM_FIXES = class DOM_FIXES
      * according to grid number, we calculate width for each child.
      *
      * @param  String mediaContainer : parent dom element with all children inside
+     *
      * @return {Void}
      */
     static buildMediaGrid(mediaContainer, grid)
@@ -46,7 +341,9 @@ const DOM_FIXES = class DOM_FIXES
                 width: newWidth + 'px',
             });
 
-        })
+        });
+
+        return;
 
     }
 
@@ -63,61 +360,7 @@ const DOM_MODS = class DOM_MODS
     {
 
         DOM_MODS.currentMedia = null;
-
-    }
-
-    /**
-     * Show file metadata inside the same block over the media file.
-     *
-     * @param  {HTMLElement} elem media element
-     *
-     * @return {Void}
-     */
-    static showMediaMeta(elem)
-    {
-    }
-
-    /**
-     * Hide file metadata.
-     *
-     * @param {HTMLElement} elem media element
-     *
-     * @return {Void}
-     */
-    static hideMediaMeta(elem)
-    {
-    }
-
-    /**
-     * Open modal window and place photo inside. Photo's url we take from
-     * 'elem' attribute 'url'.
-     *
-     * @param {HTMLElement} elem       media element
-     * @param {Integer}     animSpeed  media appearance animation speed
-     *
-     * @return {Void}
-     */
-    static showFullMedia(elem, animSpeed)
-    {
-
-        var mediaUrl  = $(elem).attr('url');
-        var photoHtml = $("<img src='" + mediaUrl + "' />");
-        var videoHtml = $("<video controls><source src='" + mediaUrl + "' type='video/mp4' /></video>");
-        var animSpeed = animSpeed === undefined ? 0 : animSpeed;
-
-        if (DOM_MODS.getCurrentPage() == 'photos') {
-            DOM_MODS.openModalWindow(1, photoHtml, animSpeed);
-            DOM_MODS.setMediaSize(photoHtml, animSpeed);
-            DOM_MODS.addMediaNavbar(photoHtml, animSpeed);
-        }
-
-        if (DOM_MODS.getCurrentPage() == 'videos') {
-            DOM_MODS.openModalWindow(1, videoHtml, animSpeed);
-            DOM_MODS.setMediaSize(videoHtml, animSpeed);
-            DOM_MODS.addMediaNavbar(videoHtml, animSpeed);
-        }
-
-        return;
+        DOM_MODS.currentAction = null;
 
     }
 
@@ -155,7 +398,315 @@ const DOM_MODS = class DOM_MODS
 
             });
 
-        }, customUrl, method, data, type, async)
+        }, customUrl, method, data, type, async);
+
+        return;
+
+    }
+
+    /**
+     * Close modal window and clean up it's data.
+     *
+     * @param {Integer} level      could be 1,2,3 - depends on modal window number
+     * @param {Integer} animSpeed  animation speed, optional
+     *
+     * @return {Void}
+     */
+    static closeModalWindow(level, animSpeed)
+    {
+
+        var modalWindow = $('#modal-' + level);
+        var animSpeed   = typeof animSpeed == 'undeined' ? ANIM_FAST : animSpeed;
+
+        modalWindow.stop().fadeOut(animSpeed, function() {
+
+            modalWindow.find('#data-modal-' + level).empty();
+
+            $('html').css('overflow', 'auto');
+
+        });
+
+        DOM_MODS.stopListenToMediaKeys();
+
+        return;
+
+    }
+
+    /**
+     * Clean up the form fields when it's needed by iterating through all it's
+     * children.
+     *
+     * @param {String} formId  form identifier, etc <div id="login-box">...
+     *
+     * @return {Void}
+     */
+    static cleanForm(formId)
+    {
+
+        var formElement = $('#' + formId);
+
+        formElement.find('input, textarea').each(function(index, field) {
+
+            var submitButton = $(field).attr('type') === 'submit';
+
+            if (!submitButton) {
+
+                $(field).not("[type='submit']").val('');
+
+            }
+
+        });
+
+        return;
+
+    }
+
+    /**
+     * Get currently active media index.
+     *
+     * @return {null|integer}
+     */
+    static getCurrentMedia()
+    {
+
+        return DOM_MODS.currentMedia;
+
+    }
+
+    /**
+     * Get currently loaded through ajax page name.
+     *
+     * @return {String}
+     */
+    static getCurrentPage()
+    {
+
+        return APP.attr('page');
+
+    }
+
+    /**
+     * Hide file metadata.
+     *
+     * @param {HTMLElement} elem media element
+     *
+     * @return {Void}
+     */
+    static hideMediaMeta(elem)
+    {
+
+        return;
+
+    }
+
+    /**
+     * Hide admin control panel when root user loggs out.
+     *
+     * @return {Void}
+     */
+    static hideAdminControlPanel()
+    {
+
+        $('#control-panel').remove();
+
+        return;
+
+    }
+
+    /**
+     * Close current modal window and open a new one with next media. Cycle from
+     * the beginning if the end is reached and go forward.
+     *
+     * @param {Integer} level could be 1,2,3 - depends on modal window number
+     *
+     * @return {Void}
+     */
+    static nextMedia(level)
+    {
+
+        var nextChild = function() {
+
+            var nextChild = $('.media li:eq(' + (DOM_MODS.getCurrentMedia() + 1) + ')');
+
+            if (nextChild.length === 0)
+                nextChild = $('.media li:eq(0)');
+
+            return nextChild;
+
+        };
+        var nextElem  = nextChild().find('div').get(0);
+        var nextData  = DOM_MODS.showFullMedia(nextElem);
+
+        DOM_MODS.closeModalWindow(level);
+        DOM_MODS.setCurrentMedia(nextElem);
+        DOM_MODS.openModalWindow(level, nextData);
+
+        return;
+
+    }
+
+    /**
+     * Open login modal box, load login form box and paste it inside the modal
+     * window. Add submit and cancel button listeners to react on this actions.
+     *
+     * @param  {HTMLElement} elem : navbar button, that user clicked itself
+     *
+     * @return {Void}
+     */
+    static openLoginBox(elem)
+    {
+
+        var elem       = $(elem);
+        var modalLevel = 1;
+        var customUrl  = '/getPartLoginBox';
+
+        CUSTOM_AJAX(function(result) {
+
+            if (result.completed && result.success) {
+
+                DOM_MODS.openModalWindow(modalLevel, result.data, ANIM_MEDIUM);
+
+                /* Add submit button listener */
+                $('#login-box_submit').unbind('click').on('click', function () {
+
+                    var loginBox = $(this).closest('#login-box');
+                    var login = loginBox.find('input#login-box_login').val();
+                    var password = loginBox.find('input#login-box_password').val();
+
+                    LOGIN(login, password);
+
+                });
+
+                /* Add cancel button listener */
+                $('#login-box_cancel').unbind('click').on('click', function () {
+
+                    DOM_MODS.closeModalWindow(modalLevel, ANIM_MEDIUM);
+
+                });
+            } else {
+
+                console.log({'ERROR:openLoginBox': result.message});
+
+            }
+
+        }, customUrl, 'GET', {}, 'html', false);
+
+        return;
+
+    }
+
+    /**
+     * Open modal window and paste given data inside it.
+     *
+     * @param {Integer}     level      could be 1,2,3 - depends on modal number
+     * @param {HTMLElement} data       dom element / object
+     * @param {Integer}     animSpeed  animation speed, optional
+     *
+     * @return {Void}
+     */
+    static openModalWindow(level, data, animSpeed)
+    {
+
+        var modalWindow = $('#modal-' + level);
+        var animSpeed   = typeof animSpeed == 'undeined' ? ANIM_FAST : animSpeed;
+
+        $('html').css('overflow', 'hidden');
+
+        modalWindow.find('#data-modal-' + level).html(data);
+        modalWindow.stop().fadeIn(animSpeed);
+
+        DOM_MODS.startListenToMediaKeys(level);
+
+        return;
+
+    }
+
+    /**
+     * Close current modal window and open a new one with previous media. Open
+     * the first one from the end, if negative value and go backwards.
+     *
+     * @param {Integer} level could be 1,2,3 - depends on modal window number
+     *
+     * @return {Void}
+     */
+    static previousMedia(level)
+    {
+
+        var previousChild = $('.media li:eq(' + (DOM_MODS.getCurrentMedia() - 1) + ')');
+        var previousElem  = previousChild.find('div').get(0);
+        var previousData  = DOM_MODS.showFullMedia(previousElem);
+
+        DOM_MODS.closeModalWindow(level);
+        DOM_MODS.setCurrentMedia(previousElem);
+        DOM_MODS.openModalWindow(level, previousData);
+
+        return;
+
+    }
+
+    /**
+     * Switch current action state. It could be 'edit' or 'delete'.
+     *
+     * @param {String} type
+     *
+     * @return {Void}
+     */
+    static setCurrentActionType(type)
+    {
+
+        if (typeof type == 'undefined') {
+
+            console.log({'ERROR:setCurrentActionType': 'Current action type is not defined'});
+
+            return;
+
+        }
+
+        if (type != 'edit' || type != 'delete') {
+
+            DOM_MODS.currentAction = null;
+
+            console.log({'ERROR:setCurrentActionType': 'Current action type is incorrect'});
+
+            return;
+
+        }
+
+        DOM_MODS.currentAction = type;
+
+        return;
+
+    }
+
+    /**
+     * Set current media index.
+     *
+     * @param  {HTMLElement} elem media element
+     *
+     * @return {Void}
+     */
+    static setCurrentMedia(elem)
+    {
+
+        DOM_MODS.currentMedia = $(elem).closest('li').index();
+
+        return;
+
+    }
+
+    /**
+     * Set new page name.
+     *
+     * @param {String} name
+     *
+     * @return {Void}
+     */
+    static setCurrentPage(name)
+    {
+
+        APP.attr('page', name);
+
+        return;
 
     }
 
@@ -197,186 +748,6 @@ const DOM_MODS = class DOM_MODS
             media.stop().animate({marginTop: 0}, animSpeed);
 
         });
-
-        return;
-
-    }
-
-    /**
-     * Set current media index.
-     *
-     * @param  {HTMLElement} elem media element
-     *
-     * @return {Void}
-     */
-    static setCurrentMedia(elem)
-    {
-
-        DOM_MODS.currentMedia = $(elem).closest('li').index();
-
-        return;
-
-    }
-
-    /**
-     * Get currently active media index.
-     *
-     * @returns {null|integer}
-     */
-    static getCurrentMedia()
-    {
-
-        return DOM_MODS.currentMedia;
-
-    }
-
-    /**
-     * Open modal window and paste given data inside it.
-     *
-     * @param {Integer}     level      could be 1,2,3 - depends on modal number
-     * @param {HTMLElement} data       dom element / object
-     * @param {Integer}     animSpeed  animation speed, optional
-     *
-     * @return {Void}
-     */
-    static openModalWindow(level, data, animSpeed)
-    {
-
-        var modalWindow = $('#modal-' + level);
-        var animSpeed   = typeof animSpeed == 'undeined' ? ANIM_FAST : animSpeed;
-
-        $('html').css('overflow', 'hidden');
-
-        modalWindow.find('#data-modal-' + level).html(data);
-        modalWindow.stop().fadeIn(animSpeed);
-
-        DOM_MODS.startListenToMediaKeys(level);
-
-        return;
-
-    }
-
-    /**
-     * Close modal window and clean up it's data.
-     *
-     * @param {Integer} level      could be 1,2,3 - depends on modal window number
-     * @param {Integer} animSpeed  animation speed, optional
-     *
-     * @return {Void}
-     */
-    static closeModalWindow(level, animSpeed)
-    {
-
-        var modalWindow = $('#modal-' + level);
-        var animSpeed   = typeof animSpeed == 'undeined' ? ANIM_FAST : animSpeed;
-
-        modalWindow.stop().fadeOut(animSpeed, function() {
-
-            modalWindow.find('#data-modal-' + level).empty();
-
-            $('html').css('overflow', 'auto');
-
-        });
-
-        DOM_MODS.stopListenToMediaKeys();
-
-        return;
-
-    }
-
-    /**
-     * Add listener for media keys (previous, next, etc).
-     *
-     * @param {Integer} level could be 1,2,3 - depends on modal window number
-     *
-     * @return {Void}
-     */
-    static startListenToMediaKeys(level)
-    {
-
-        var previousMedia = DOM_MODS.previousMedia;
-        var nextMedia     = DOM_MODS.nextMedia;
-        var closeMedia    = DOM_MODS.closeModalWindow;
-
-        $(document).unbind('keydown').keydown(function(event) {
-
-            var keyCode = event.keyCode;
-
-            /* Escape - close modal window */
-            if (keyCode == 27) closeMedia(level);
-
-            /* Left arrow <- previous */
-            if (keyCode == 37) previousMedia(level);
-
-            /* Right arrow -> next */
-            if (keyCode == 39) nextMedia(level);
-
-        });
-
-        return;
-
-    }
-
-    /**
-     * Close current modal window and open a new one with next media. Cycle from
-     * the beginning if the end is reached and go forward.
-     *
-     * @param {Integer} level could be 1,2,3 - depends on modal window number
-     *
-     * @return {Void}
-     */
-    static nextMedia(level)
-    {
-
-        var nextChild = function() {
-
-            var nextChild = $('.media li:eq(' + (DOM_MODS.getCurrentMedia() + 1) + ')');
-
-            if (nextChild.length === 0)
-                nextChild = $('.media li:eq(0)');
-
-            return nextChild;
-
-        };
-        var nextElem  = nextChild().find('div').get(0);
-        var nextData  = DOM_MODS.showFullMedia(nextElem);
-
-        DOM_MODS.closeModalWindow(level);
-        DOM_MODS.setCurrentMedia(nextElem);
-        DOM_MODS.openModalWindow(level, nextData);
-
-    }
-
-    /**
-     * Close current modal window and open a new one with previous media. Open
-     * the first one from the end, if negative value and go backwards.
-     *
-     * @param {Integer} level could be 1,2,3 - depends on modal window number
-     *
-     * @return {Void}
-     */
-    static previousMedia(level)
-    {
-
-        var previousChild = $('.media li:eq(' + (DOM_MODS.getCurrentMedia() - 1) + ')');
-        var previousElem  = previousChild.find('div').get(0);
-        var previousData  = DOM_MODS.showFullMedia(previousElem);
-
-        DOM_MODS.closeModalWindow(level);
-        DOM_MODS.setCurrentMedia(previousElem);
-        DOM_MODS.openModalWindow(level, previousData);
-
-        return;
-
-    }
-
-    /**
-     * Remove listener for media keys (previous, next, etc).
-     */
-    static stopListenToMediaKeys()
-    {
-
-        $(document).unbind('keydown');
 
         return;
 
@@ -430,77 +801,115 @@ const DOM_MODS = class DOM_MODS
     }
 
     /**
-     * Get currently loaded through ajax page name.
-     *
-     * @return {String}
-     */
-    static getCurrentPage()
-    {
-
-        return APP.attr('page');
-
-        return;
-
-    }
-
-    /**
-     * Set new page name.
-     *
-     * @param {String} name
-     * @return {Void}
-     */
-    static setCurrentPage(name)
-    {
-
-        APP.attr('page', name);
-
-        return;
-
-    }
-
-    /**
-     * Open login modal box, load login form box and paste it inside the modal
-     * window. Add submit and cancel button listeners to react on this actions.
-     *
-     * @param  {HTMLElement} elem : navbar button, that user clicked itself
+     * Show admin control panel with additional controls, if root user
+     * successfully loggs in.
      *
      * @return {Void}
      */
-    static openLoginBox(elem)
+    static showAdminControlPanel()
     {
 
-        var elem       = $(elem);
-        var modalLevel = 1;
-        var customUrl  = '/getPartLoginBox';
+        var customUrl = '/getPartControlPanel';
 
         CUSTOM_AJAX(function(result) {
 
-            if (result.completed && result.success) {
-
-                DOM_MODS.openModalWindow(modalLevel, result.data, ANIM_MEDIUM);
-
-                /* Add submit button listener */
-                $('#login-box_submit').unbind('click').on('click', function () {
-
-                    var loginBox = $(this).closest('#login-box');
-                    var login = loginBox.find('input#login-box_login').val();
-                    var password = loginBox.find('input#login-box_password').val();
-
-                    LOGIN(login, password);
-
-                });
-
-                /* Add cancel button listener */
-                $('#login-box_cancel').unbind('click').on('click', function () {
-
-                    DOM_MODS.closeModalWindow(modalLevel, ANIM_MEDIUM);
-
-                });
-            } else {
-                console.log(result.message);
-            }
+            $('body').prepend(result.data);
 
         }, customUrl, 'GET', {}, 'html', false);
+
+        return;
+
+    }
+
+    /**
+     * Open modal window and place photo inside. Photo's url we take from
+     * 'elem' attribute 'url'.
+     *
+     * @param {HTMLElement} elem       media element
+     * @param {Integer}     animSpeed  media appearance animation speed
+     *
+     * @return {Void}
+     */
+    static showFullMedia(elem, animSpeed)
+    {
+
+        var mediaUrl  = $(elem).attr('url');
+        var photoHtml = $("<img src='" + mediaUrl + "' />");
+        var videoHtml = $("<video controls><source src='" + mediaUrl + "' type='video/mp4' /></video>");
+        var animSpeed = animSpeed === undefined ? 0 : animSpeed;
+
+        if (DOM_MODS.getCurrentPage() == 'photos') {
+            DOM_MODS.openModalWindow(1, photoHtml, animSpeed);
+            DOM_MODS.setMediaSize(photoHtml, animSpeed);
+            DOM_MODS.addMediaNavbar(photoHtml, animSpeed);
+        }
+
+        if (DOM_MODS.getCurrentPage() == 'videos') {
+            DOM_MODS.openModalWindow(1, videoHtml, animSpeed);
+            DOM_MODS.setMediaSize(videoHtml, animSpeed);
+            DOM_MODS.addMediaNavbar(videoHtml, animSpeed);
+        }
+
+        return;
+
+    }
+
+    /**
+     * Show file metadata inside the same block over the media file.
+     *
+     * @param  {HTMLElement} elem media element
+     *
+     * @return {Void}
+     */
+    static showMediaMeta(elem)
+    {
+
+        return;
+
+    }
+
+    /**
+     * Add listener for media keys (previous, next, etc).
+     *
+     * @param {Integer} level could be 1,2,3 - depends on modal window number
+     *
+     * @return {Void}
+     */
+    static startListenToMediaKeys(level)
+    {
+
+        var previousMedia = DOM_MODS.previousMedia;
+        var nextMedia     = DOM_MODS.nextMedia;
+        var closeMedia    = DOM_MODS.closeModalWindow;
+
+        $(document).unbind('keydown').keydown(function(event) {
+
+            var keyCode = event.keyCode;
+
+            /* Escape - close modal window */
+            if (keyCode == 27) closeMedia(level);
+
+            /* Left arrow <- previous */
+            if (keyCode == 37) previousMedia(level);
+
+            /* Right arrow -> next */
+            if (keyCode == 39) nextMedia(level);
+
+        });
+
+        return;
+
+    }
+
+    /**
+     * Remove listener for media keys (previous, next, etc).
+     *
+     * @return {Void}
+     */
+    static stopListenToMediaKeys()
+    {
+
+        $(document).unbind('keydown');
 
         return;
 
@@ -525,264 +934,52 @@ const DOM_MODS = class DOM_MODS
             logoutButton.prop('hidden', false);
         }
 
-    }
-
-    /**
-     * Show admin control panel with additional controls, if root user
-     * successfully loggs in.
-     *
-     * @return {Void}
-     */
-    static showAdminControlPanel()
-    {
-
-        var customUrl = '/getPartControlPanel';
-
-        CUSTOM_AJAX(function(result) {
-
-            $('body').prepend(result.data);
-
-        }, customUrl, 'GET', {}, 'html', false);
-
-    }
-
-    /**
-     * Hide admin control panel when root user loggs out.
-     *
-     * @return {Void}
-     */
-    static hideAdminControlPanel()
-    {
-
-        $('#control-panel').remove();
-
-    }
-
-
-    /**
-     * Clean up the form fields when it's needed by iterating through all it's
-     * children.
-     *
-     * @param {String} formId  form identifier, etc <div id="login-box">...
-     */
-    static cleanForm(formId)
-    {
-
-        var formElement = $('#' + formId);
-
-        formElement.find('input, textarea').each(function(index, field) {
-
-            var submitButton = $(field).attr('type') === 'submit';
-
-            if (!submitButton) {
-
-                $(field).not("[type='submit']").val('');
-
-            }
-
-        });
+        return;
 
     }
 
 }
 
 /**
- * Here we store all content manipulation methods like adding new element,
- * modifing existing one or deleting it. All methods are common for each media
- * type and accept parameters to define which type is going to be manipulated.
- * The type we usualy take from 'div#app page='  attribute. If it's empty, then
- * we are dealing with home / main / news page.
+ * It's just a simple validation class, where we will gather all necessary
+ * regular expressions to validate different kind of data.
  */
-const CONTENT_MANAGER = class CONTENT_MOD
+const VALIDATE = class VALIDATE
 {
 
     /**
-     * Define what type of page currently loaded. We take the 'page' value from
-     * 'div#app' element.
+     * Input data could contain: numbers, text, spaces.
      *
-     * @return {String}
-     */
-    static definePageType()
-    {
-
-        return $('#app').attr('page') == '' ? 'news' : $('#app').attr('page');
-
-    }
-
-    /**
-     ***************************************************************************
-     * ADD METHODS *************************************************************
-     ***************************************************************************
-     * Here we define the type of the page and call specific method to ADD new
-     * content.
+     * @param {String} input  what we are going to 'test'
      *
-     * @return {Void}
+     * @return {Object}
      */
-    static add()
+    static alphaNumeric(input)
     {
 
-        var type   = this.definePageType();
-        var method = 'add' + type.charAt(0).toUpperCase() + type.slice(1);
+        var rule = RegExp(/\*/, 'g');
 
-        this[method]();
+        return rule.test(input)
+            ? {isValid: true}
+            : {isValid: false, message: 'errorSomethingWentWrong'};
 
     }
 
     /**
-     * Add new posts to news / main / home page.
-     */
-    static addNews()
-    {
-
-        alert('Adding new posts!');
-
-    }
-
-    /**
-     * Add new photos to photos page.
-     */
-    static addPhotos()
-    {
-
-        alert('Adding new photos!');
-
-    }
-
-    /**
-     *  Add new videos to videos page.
-     */
-    static addVideos()
-    {
-
-        alert('Adding new videos!');
-
-    }
-
-    /**
-     * Add new contacts to contacts page.
-     */
-    static addContacts()
-    {
-
-        alert('Adding new contacts!');
-
-    }
-
-    /**
-     ***************************************************************************
-     * DELETE METHODS **********************************************************
-     ***************************************************************************
-     * Here we define the type of the page and call specific method to DELETE
-     * already existing content.
+     * Input data could contain any character but should not be empty.
      *
-     * @return {Void}
-     */
-    static delete()
-    {
-
-        var type   = this.definePageType();
-        var method = 'delete' + type.charAt(0).toUpperCase() + type.slice(1);
-
-        this[method]();
-
-    }
-
-    /**
-     * Delete existing posts from news / main / home page.
-     */
-    static deleteNews()
-    {
-
-        alert('Deleting existing posts!');
-
-    }
-
-    /**
-     * Delete existing photos from photos page.
-     */
-    static deletePhotos()
-    {
-
-        alert('Deleting existing photos!');
-
-    }
-
-    /**
-     *  Delete existing videos from videos page.
-     */
-    static deleteVideos()
-    {
-
-        alert('Deleting existing videos!');
-
-    }
-
-    /**
-     * Delete existing contacts from contacts page.
-     */
-    static deleteContacts()
-    {
-
-        alert('Deleting existing contacts!');
-
-    }
-
-    /**
-     ***************************************************************************
-     * EDIT METHODS ************************************************************
-     ***************************************************************************
-     * Here we define the type of the page and call specific method to EDIT
-     * existing content.
+     * @param {String} input  what we are going to 'test'
      *
-     * @return {Void}
+     * @return {Object}
      */
-    static edit()
+    static textField(input)
     {
 
-        var type   = this.definePageType();
-        var method = 'edit' + type.charAt(0).toUpperCase() + type.slice(1);
+        var rule = RegExp(/.*\S.*/, 'g');
 
-        this[method]();
-
-    }
-
-    /**
-     * Edit existing posts from news / main / home page.
-     */
-    static editNews()
-    {
-
-        alert('Editing existing posts!');
-
-    }
-
-    /**
-     * Edit existing photos from photos page.
-     */
-    static editPhotos()
-    {
-
-        alert('Editing existing photos!');
-
-    }
-
-    /**
-     *  Edit existing videos from videos page.
-     */
-    static editVideos()
-    {
-
-        alert('Editing existing videos!');
-
-    }
-
-    /**
-     * Edit existing contacts from contacts page.
-     */
-    static editContacts()
-    {
-
-        alert('Editing existing contacts!');
+        return rule.test(input)
+            ? {isValid: true}
+            : {isValid: false, message: 'errorTextField'};
 
     }
 
@@ -851,6 +1048,27 @@ const CUSTOM_AJAX = function(action, customUrl, method, data, type, async)
 }
 
 /**
+ * Get all existing language constants so we can use it wherever we want in our
+ * JavaScript code, not being dependent on backend.
+ */
+const GET_LANG = function()
+{
+
+    var customUrl = '/getLanguage';
+    var method    = 'POST';
+    var data      = {};
+    var type      = 'json';
+    var async     = true;
+
+    CUSTOM_AJAX(function(result) {
+
+        LANG = result.data;
+
+    }, customUrl, method, data, type, async);
+
+}();
+
+/**
  * Load selected page into main application block instead of already loaded one.
  *
  * @param  {HTMLElement} elem anchor button
@@ -872,20 +1090,13 @@ const LOAD_PAGE = function(elem, name)
 
 	return;
 
-    /* Switch active state for selected section */
-	function switchActivePage() {
-
-		pageSwitcher.removeClass('active');
-		elem.addClass('active');
-
-	}
-
     /* Load selected page thourh ajax */
-	function loadSelectedPage() {
+    function loadSelectedPage() {
 
         CUSTOM_AJAX(function(result) {
 
             if (result.completed && result.success) {
+
                 APP.slideUp(ANIM_FAST, function() {
 
                     $(this).empty().html(result.data).slideDown(ANIM_FAST);
@@ -893,14 +1104,26 @@ const LOAD_PAGE = function(elem, name)
                     DOM_MODS.setCurrentPage(name);
 
                 });
+
             } else {
-                console.log(result);
+
+                console.log({'ERROR:loadSelectedPage': result.message});
+
                 alert('Error. Please see console log.');
+
             }
 
         }, customUrl, 'GET', {}, 'html', false);
 
     }
+
+    /* Switch active state for selected section */
+	function switchActivePage() {
+
+		pageSwitcher.removeClass('active');
+		elem.addClass('active');
+
+	}
 
 }
 
@@ -947,7 +1170,7 @@ const LOGIN = function(login, password)
 /**
  * Due to we have only one user - root, we have to remove only him from redis.
  *
- * @return {Boolean}
+ * @return {Void}
  */
 const LOGOUT = function()
 {

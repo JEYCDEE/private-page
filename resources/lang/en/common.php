@@ -20,7 +20,8 @@ return [
     'yourPassphrase'            => 'Your passphrase',
     'giveItATry'                => 'Give it a try',
     'cancel'                    => 'Cancel',
-//    '' => '',
+    'tellSomethingImportant'    => 'Tell something important',
+    'postIt'                    => 'Post it',
 //    '' => '',
 //    '' => '',
 //    '' => '',
@@ -29,7 +30,8 @@ return [
 //    '' => '',
 
     /* Error messages */
-    'errorSomethingWentWrong'   => 'Something went wrong, please fix this',
+    'errorSomethingWentWrong'   => 'Something went wrong, please fix this. See error in console.',
+    'errorTextField'            => 'Text field is incorrect. It should not be empty.'
 //    '' => '',
 //    '' => '',
 //    '' => '',

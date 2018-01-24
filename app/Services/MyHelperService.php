@@ -11,6 +11,7 @@ class MyHelperService
      * Convert any array into an object.
      *
      * @param  array  $dataArr : any array
+     *
      * @return object
      */
     public static function arrToObj(array $dataArr, $deep = false)
@@ -34,7 +35,8 @@ class MyHelperService
      * Check if any chars live inside a string, other than numbers and letters.
      *
      * @param  string $string : simple string value
-     * @return bool
+     *
+     * @return boolean
      */
     public static function simpleString(string $string)
     {
@@ -49,6 +51,7 @@ class MyHelperService
      *
      * @param  Illuminate\Filesystem\FilesystemAdapter $resource
      * @param  string $saveTo : media type, like 'videos', 'photos'
+     *
      * @return mixed
      */
     public static function mediaSymlinks(FilesystemAdapter $resource, $saveTo)

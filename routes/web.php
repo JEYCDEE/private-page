@@ -11,16 +11,34 @@
 |
 */
 
-
+/* Home (main) page. */
 Route::get('/{name}', 'HomeController@index')->where('name', 'home|index|');
+
+/* Language operations. */
+Route::get('/switchLanguage/{lang}', 'HomeController@switchLanguage');
+Route::post('/getLanguage', 'HomeController@getLanguage');
+
+/* Login and logout. */
+Route::get('/loginAction', 'LoginController@loginAction');
+Route::get('/logoutAction', 'LoginController@logoutAction');
+
+/* Different HTML parts without extended layout. */
 Route::get('/getPartMediaNavbar', 'HomeController@partMediaNavbar');
 Route::get('/getPartLoginBox', 'HomeController@partLoginBox');
 Route::get('/getPartControlPanel', 'HomeController@partControlPanel');
-Route::get('/loginAction', 'LoginController@loginAction');
-Route::get('/logoutAction', 'LoginController@logoutAction');
-Route::get('/switchLanguage/{lang}', 'HomeController@switchLanguage');
+Route::get('/getPartNewsPostForm', 'HomeController@partNewsPostForm');
 
+/* News */
+Route::post('/addNews', 'NewsController@add');
+
+/* Photos */
 Route::resource('/pages/photos', 'PhotosController');
+
+/* Videos */
 Route::resource('/pages/videos', 'VideosController');
+
+/* Contacts */
 Route::resource('/pages/contacts', 'ContactsController');
-Route::resource('/pages/calendars', 'CalendarsController');
+
+/* Calendars (coming soon) */
+//Route::resource('/pages/calendars', 'CalendarsController');

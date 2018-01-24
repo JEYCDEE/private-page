@@ -6,6 +6,7 @@ use App\Services\NewsPosts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Cookie;
@@ -22,18 +23,18 @@ class HomeController extends Controller
     private $appLanguages = ['en', 'ru'];
 
     /**
+     * All news posts for home / index / news page.
+     *
+     * @var NewsPosts
+     */
+    private $newsPosts;
+
+    /**
      * Redis database itself.
      *
      * @var Redis
      */
     private $redis;
-
-    /**
-     * All news posts for home / index / news page
-     *
-     * @var NewsPosts
-     */
-    private $newsPosts;
 
     /**
      * HomeController constructor.
@@ -46,7 +47,7 @@ class HomeController extends Controller
 
         $this->setLanguage();
 
-        $this->redis = $redis;
+        $this->redis     = $redis;
         $this->newsPosts = $newsPosts;
 
     }
@@ -109,6 +110,18 @@ class HomeController extends Controller
     }
 
     /**
+     * Get current language all constants.
+     *
+     * @return object
+     */
+    public function getLanguage()
+    {
+
+        return json_encode(Lang::get('common'));
+
+    }
+
+    /**
      * This is navigation bar part for media. '$link' is a URL link, came from
      * photo or video 'src' attribute and sent via ajax request here.
      *
@@ -117,7 +130,6 @@ class HomeController extends Controller
      * @var string $link : link for <a> element for downloading picture
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
      */
     public function partMediaNavbar(Request $request)
     {
@@ -154,6 +166,18 @@ class HomeController extends Controller
     {
 
         return view('parts.control-panel', []);
+
+    }
+
+    /**
+     * This is a form for adding new posts to the home screen.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function partNewsPostForm()
+    {
+
+        return view('parts.news-post-form', []);
 
     }
 }

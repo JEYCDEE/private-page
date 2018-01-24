@@ -26,7 +26,9 @@ implements LoginInterface
         $rootPassword = env('ROOT_PASSWORD');
 
         if ($userLogin == $rootLogin && $userPassword == $rootPassword) {
+
             return (bool) Redis::set('isRoot', true);
+
         }
 
         return false;

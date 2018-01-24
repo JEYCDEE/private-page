@@ -43,9 +43,10 @@ implements CreateThumbnailsInterface
      *
      * @param  string $path : path to a file or folder
      * @param  string $saveTo : path where file(s) would be saved
-     * @return bool
+     *
+     * @return boolean
      */
-    public static function make(string $path, string $saveTo)
+    public static function make(string $path, string $saveTo): bool
     {
 
         self::defineSource($path);
@@ -55,6 +56,8 @@ implements CreateThumbnailsInterface
 
         if (self::$file)
             return self::fromFile($path, $saveTo);
+
+        return false;
 
     }
 
@@ -80,6 +83,7 @@ implements CreateThumbnailsInterface
      *
      * @param  string $path : path to a file or folder
      * @param  string $saveTo : path where file(s) would be saved
+     *
      * @return void
      */
     private static function fromDirectory(string $path, string $saveTo)
@@ -114,6 +118,7 @@ implements CreateThumbnailsInterface
      *
      * @param  string $path : path to a file or folder
      * @param  string $saveTo : path where file(s) would be saved
+     *
      * @return void
      */
     private static function fromFile(string $path, string $saveTo)

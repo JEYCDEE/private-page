@@ -13,10 +13,10 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         {{-- Styles --}}
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/desktop.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/tablet.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/phone.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css?v=2018.01.23.01') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/desktop.css?v=2018.01.23.01') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/tablet.css?v=2018.01.23.01') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/phone.css?v=2018.01.23.01') }}">
 
         {{-- Scripts --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -152,7 +152,7 @@
 
     </body>
 
-    <script type="text/javascript" src="{{ asset('js/js.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/js.js?v=2018.01.23.01') }}"></script>
     @yield('scripts')
 
 </html>

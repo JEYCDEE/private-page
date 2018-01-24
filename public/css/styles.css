@@ -79,6 +79,12 @@ ul > li {
     margin: -3px !important;
 }
 
+textarea, input {
+    padding: 0;
+    margin: 0;
+    border: none;
+    resize: none;
+}
 textarea:focus, input:focus {
     outline: none;
 }
@@ -96,6 +102,11 @@ input[type="submit"] {
     background-color: rgb(50,100,150);
     color: rgb(255,255,255);
     cursor: pointer;
+}
+textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 6px auto;
 }
 
 /******************************************************************************/
@@ -273,7 +284,7 @@ input[type="submit"] {
     border-radius: 7px;
 }
 .news-post .news-post-time {
-    width: 70px;
+    width: 64px;
     display: inline-block;
     vertical-align: middle;
     color: rgb(50,100,150);
@@ -300,6 +311,10 @@ input[type="submit"] {
 .static-page-switcher:hover {
     background-color: rgb(100,150,200);
     color: rgb(255,255,255);
+}
+
+.text-error {
+    color: rgb(220,50,0);
 }
 
 /******************************************************************************/
@@ -366,4 +381,25 @@ input[type="submit"] {
 }
 #control-panel > p > a:hover {
     color: rgb(150,200,250);
+}
+
+#news-post-form {
+    display: block;
+    width: 1024px;
+    height: auto;
+    padding: 20px 20px 60px 20px;
+    margin: 20px auto;
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 8px;
+}
+#news-post-form > div.textarea-area {
+    height: auto;
+    background-color: rgb(255,255,255);
+    margin-bottom: 6px;
+}
+#news-post-form > div.textarea-area > textarea {
+    height: 100%;
+    min-height: 300px;
+    margin: 0;
+    font-size: 20px;
 }
